@@ -18,8 +18,13 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-md">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/">
-          <a className="text-2xl font-bold font-display tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-            NEXUS
+          <a className="flex items-center gap-3 group">
+            <img 
+              src="/images/logo.png" 
+              alt="Matthabbey Solutions Services" 
+              className="h-10 w-auto object-contain brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300" 
+            />
+            <span className="sr-only">Matthabbey Solutions Services</span>
           </a>
         </Link>
 
