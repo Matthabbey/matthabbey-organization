@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "Nexus transformed our legacy infrastructure into a scalable, modern powerhouse. The ROI was immediate.",
+    quote: "Matthabbey transformed our legacy infrastructure into a scalable, modern powerhouse. The ROI was immediate.",
     author: "Elena V.",
     role: "CTO, FinTech Global",
     company: "FinTech Global"
@@ -15,7 +15,7 @@ const testimonials = [
     company: "Stealth"
   },
   {
-    quote: "We needed a partner who could handle complexity. Nexus delivered a flawless platform ahead of schedule.",
+    quote: "We needed a partner who could handle complexity. Matthabbey delivered a flawless platform ahead of schedule.",
     author: "Sarah Jenkins",
     role: "VP of Product, Enterprise Corp",
     company: "Enterprise Corp"

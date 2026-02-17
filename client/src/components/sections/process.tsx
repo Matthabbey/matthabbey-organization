@@ -31,7 +31,7 @@ export function Process() {
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-20">
-          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">The Nexus Protocol</h2>
+          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">The MATTHABBEY Protocol</h2>
           <p className="text-muted-foreground text-lg">
             A systematic approach to turning complex problems into elegant software solutions.
           </p>
