@@ -34,14 +34,19 @@ export function ClientCarousel() {
       </div>
       
       <div className="embla overflow-hidden" ref={emblaRef}>
-        <div className="flex touch-pan-y">
+        <div className="flex touch-pan-y items-center">
           {clients.map((client, index) => (
-            <div className="flex-[0_0_15rem] min-w-0 px-8 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100" key={index}>
-              <img 
-                src={client.logo} 
-                alt={client.name} 
-                className="h-12 w-auto object-contain brightness-200 contrast-0 hover:brightness-100 hover:contrast-100 transition-all duration-300"
-              />
+            <div className="flex-[0_0_18rem] min-w-0 px-8 flex flex-col items-center justify-center gap-4 group cursor-default" key={index}>
+              <div className="h-20 w-auto flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <img 
+                  src={client.logo} 
+                  alt={client.name} 
+                  className="h-full w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-all duration-300"
+                />
+              </div>
+              <span className="text-lg font-bold font-display text-white/80 group-hover:text-white transition-colors">
+                {client.name}
+              </span>
             </div>
           ))}
         </div>
