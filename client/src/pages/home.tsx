@@ -4,6 +4,7 @@ import { ClientCarousel } from "@/components/sections/client-carousel";
 import { Services } from "@/components/sections/services";
 import { Projects } from "@/components/sections/projects";
 import { Process } from "@/components/sections/process";
+import { About } from "@/components/sections/about";
 import { Testimonials } from "@/components/sections/testimonials";
 import { CTA } from "@/components/sections/cta";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
@@ -15,6 +16,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <ClientCarousel />
+      <About />
       <Services />
       <Projects />
       <Process />
@@ -51,7 +53,7 @@ export default function Home() {
               <ul className="space-y-4 text-sm text-muted-foreground">
                 <li className="flex items-center gap-3">
                   <MapPin size={16} className="text-primary" />
-                  Lagos, Lekki Nigeria
+                  Lekki, Lagos Nigeria
                 </li>
                 <li className="flex items-center gap-3">
                   <Phone size={16} className="text-primary" />

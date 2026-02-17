@@ -60,7 +60,7 @@ export function CTA() {
               </div>
               <div>
                 <h4 className="font-bold text-lg mb-1">Headquarters</h4>
-                <p className="text-muted-foreground">Lagos, Lekki Nigeria</p>
+                <p className="text-muted-foreground">Lekki, Lagos Nigeria</p>
               </div>
             </div>
             
