@@ -25,7 +25,7 @@ export function About() {
               
               <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
                 <Badge className="mb-4 bg-primary text-white border-primary/50">Leadership</Badge>
-                <h3 className="text-3xl font-bold font-display text-white mb-1">Ayoola Abiodun Akinpelu</h3>
+                <h3 className="text-3xl font-bold font-display text-white mb-1">Ayoola Akinpelu</h3>
                 <p className="text-primary font-medium">CEO & Co-founder</p>
               </div>
             </div>
@@ -60,11 +60,7 @@ export function About() {
               </p>
             </div>
             
-            <div className="mt-10 grid grid-cols-3 gap-8 border-t border-white/10 pt-8">
-              <div>
-                <div className="text-3xl font-bold text-white font-display">5+</div>
-                <div className="text-sm text-muted-foreground mt-1">Years Experience</div>
-              </div>
+            <div className="mt-10 grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
               <div>
                 <div className="text-3xl font-bold text-white font-display">50+</div>
                 <div className="text-sm text-muted-foreground mt-1">Projects Delivered</div>
