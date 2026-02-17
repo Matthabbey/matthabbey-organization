@@ -7,6 +7,7 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { MapPin, Phone, Mail } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -38,7 +39,7 @@ export function CTA() {
     <section className="py-24 relative overflow-hidden bg-grid">
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
       
-      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-start">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -48,36 +49,38 @@ export function CTA() {
             Ready to Build the <br />
             <span className="text-primary text-glow">Extraordinary?</span>
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="text-xl text-muted-foreground mb-12">
             We only take on a limited number of partners each quarter to ensure maximum attention and quality. Secure your slot today.
           </p>
           
-          <div className="space-y-4">
-            <div className="flex items-center gap-4 text-white/80">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-                <span className="font-bold text-primary">01</span>
+          <div className="space-y-8">
+            <div className="flex items-start gap-4 text-white/90 group">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0 group-hover:bg-primary/20 transition-colors">
+                <MapPin className="text-primary h-5 w-5" />
               </div>
               <div>
-                <h4 className="font-bold">Discovery Call</h4>
-                <p className="text-sm text-muted-foreground">30-minute strategy session</p>
+                <h4 className="font-bold text-lg mb-1">Headquarters</h4>
+                <p className="text-muted-foreground">Lagos, Lekki Nigeria</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 text-white/80">
-               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-                <span className="font-bold text-primary">02</span>
+            
+            <div className="flex items-start gap-4 text-white/90 group">
+               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0 group-hover:bg-primary/20 transition-colors">
+                <Phone className="text-primary h-5 w-5" />
               </div>
               <div>
-                <h4 className="font-bold">Proposal & Roadmap</h4>
-                <p className="text-sm text-muted-foreground">Detailed technical scope</p>
+                <h4 className="font-bold text-lg mb-1">WhatsApp Support</h4>
+                <p className="text-muted-foreground">+234 803 620 2050</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 text-white/80">
-               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-                <span className="font-bold text-primary">03</span>
+            
+            <div className="flex items-start gap-4 text-white/90 group">
+               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0 group-hover:bg-primary/20 transition-colors">
+                <Mail className="text-primary h-5 w-5" />
               </div>
               <div>
-                <h4 className="font-bold">Kickoff</h4>
-                <p className="text-sm text-muted-foreground">Immediate development start</p>
+                <h4 className="font-bold text-lg mb-1">Email Inquiries</h4>
+                <p className="text-muted-foreground break-all">matthabbeysolutionsservices@gmail.com</p>
               </div>
             </div>
           </div>
@@ -137,6 +140,9 @@ export function CTA() {
               <Button type="submit" className="w-full h-12 text-lg bg-primary hover:bg-primary/90 text-white">
                 Submit Request
               </Button>
+              <p className="text-xs text-center text-muted-foreground mt-4">
+                All requests are forwarded directly to our secure email server.
+              </p>
             </form>
           </Form>
         </motion.div>
