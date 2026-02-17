@@ -5,6 +5,7 @@ import { Projects } from "@/components/sections/projects";
 import { Process } from "@/components/sections/process";
 import { Testimonials } from "@/components/sections/testimonials";
 import { CTA } from "@/components/sections/cta";
+import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { Linkedin, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <Process />
       <Testimonials />
       <CTA />
+      <WhatsAppButton />
       
       <footer className="py-16 border-t border-white/5 bg-black/40">
         <div className="container mx-auto px-6">

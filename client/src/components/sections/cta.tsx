@@ -65,12 +65,24 @@ export function CTA() {
             </div>
             
             <div className="flex items-start gap-4 text-white/90 group">
-               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0 group-hover:bg-primary/20 transition-colors">
-                <Phone className="text-primary h-5 w-5" />
-              </div>
+               <a 
+                 href="https://wa.me/2348036202050" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0 group-hover:bg-[#25D366]/20 group-hover:border-[#25D366]/50 transition-all duration-300"
+               >
+                <Phone className="text-primary h-5 w-5 group-hover:text-[#25D366] transition-colors" />
+              </a>
               <div>
-                <h4 className="font-bold text-lg mb-1">WhatsApp Support</h4>
-                <p className="text-muted-foreground">+234 803 620 2050</p>
+                <h4 className="font-bold text-lg mb-1 group-hover:text-[#25D366] transition-colors">WhatsApp Support</h4>
+                <a 
+                  href="https://wa.me/2348036202050"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-white transition-colors"
+                >
+                  +234 803 620 2050
+                </a>
               </div>
             </div>
             
