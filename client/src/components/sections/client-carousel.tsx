@@ -37,11 +37,11 @@ export function ClientCarousel() {
         <div className="flex touch-pan-y items-center">
           {clients.map((client, index) => (
             <div className="flex-[0_0_18rem] min-w-0 px-8 flex flex-col items-center justify-center gap-4 group cursor-default" key={index}>
-              <div className="h-20 w-auto flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <div className="h-24 w-auto flex items-center justify-center transition-transform duration-300 group-hover:scale-110 p-4 rounded-xl bg-white/5 border border-white/5 group-hover:border-white/10 group-hover:bg-white/10">
                 <img 
                   src={client.logo} 
                   alt={client.name} 
-                  className="h-full w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-all duration-300"
+                  className="h-full w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300"
                 />
               </div>
               <span className="text-lg font-bold font-display text-white/80 group-hover:text-white transition-colors">
