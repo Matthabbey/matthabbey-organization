@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/components/sections/hero";
+import { ClientCarousel } from "@/components/sections/client-carousel";
 import { Services } from "@/components/sections/services";
 import { Projects } from "@/components/sections/projects";
 import { Process } from "@/components/sections/process";
@@ -13,6 +14,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
       <Navbar />
       <Hero />
+      <ClientCarousel />
       <Services />
       <Projects />
       <Process />
