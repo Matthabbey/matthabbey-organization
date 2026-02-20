@@ -21,30 +21,30 @@ export function ClientCarousel() {
   )
 
   return (
-    <section className="py-12 border-y border-white/5 bg-black/20 overflow-hidden">
+    <section className="py-12 border-y border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-gray-900/50 overflow-hidden">
       <div className="container mx-auto px-6 mb-8 text-center">
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-sm font-medium text-muted-foreground uppercase tracking-widest"
         >
-          Trusted by Industry Leaders
+          Companies We've Worked With
         </motion.p>
       </div>
-      
+
       <div className="embla overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y items-center">
           {clients.map((client, index) => (
             <div className="flex-[0_0_18rem] min-w-0 px-8 flex flex-col items-center justify-center gap-4 group cursor-default" key={index}>
-              <div className="h-24 w-auto flex items-center justify-center transition-transform duration-300 group-hover:scale-110 p-4 rounded-xl bg-white/5 border border-white/5 group-hover:border-white/10 group-hover:bg-white/10">
-                <img 
-                  src={client.logo} 
-                  alt={client.name} 
-                  className="h-full w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300"
+              <div className="h-24 w-auto flex items-center justify-center transition-transform duration-300 group-hover:scale-110 p-4 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 group-hover:border-gray-300 dark:group-hover:border-white/20 group-hover:shadow-md">
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  className="h-full w-auto object-contain transition-all duration-300"
                 />
               </div>
-              <span className="text-lg font-bold font-display text-white/80 group-hover:text-white transition-colors">
+              <span className="text-lg font-bold font-display text-foreground/80 group-hover:text-foreground transition-colors">
                 {client.name}
               </span>
             </div>
