@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FadeIn } from "@/components/layout/motion";
 import { subscribeNewsletter, type NewsletterResult } from "@/lib/newsletter";
+import { trackEvent } from "@/lib/analytics";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -32,6 +33,9 @@ export function Newsletter() {
     setBusy(true);
     const res = await subscribeNewsletter(value);
     setBusy(false);
+    if (res.status !== "error") {
+      trackEvent("newsletter_signup", { method: res.status === "sent" ? "endpoint" : "email" });
+    }
     if (res.status === "handoff") window.location.href = res.mailto;
     setResult(res);
   }

@@ -77,6 +77,17 @@
     <script>
       (function(){try{if(localStorage.getItem('theme')==='light'){document.documentElement.classList.remove('dark')}}catch(e){}})();
     </script>
+
+    <!-- Google tag (gtag.js). Page views are sent by the app on each route
+         change (client/src/lib/analytics.ts), hence send_page_view: false. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NM1JWFE5V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-5NM1JWFE5V', { send_page_view: false });
+    </script>
   </head>
   <body>
     <div id="root"></div>

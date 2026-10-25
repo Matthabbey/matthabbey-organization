@@ -21,6 +21,18 @@ The Replit deployment is **static** (`.replit` → `deploymentTarget = "static"`
 | `VITE_CONTACT_ENDPOINT` | build environment | Optional HTTP endpoint that accepts a JSON `POST` of the contact form (a Formspree/Web3Forms URL, or `/api/enquiries` when the Express server is deployed). When unset, the form hands the message off to WhatsApp and email with everything pre-filled, so nothing is lost on static hosting. |
 | `VITE_NEWSLETTER_ENDPOINT` | build environment | Optional HTTP endpoint that accepts `{ "email": "…" }` as JSON. When unset, the Subscribe button opens a pre-filled email request instead. |
 
+## Analytics
+
+Google Analytics 4 is installed with measurement ID `G-5NM1JWFE5V`; the tag snippet lives in `client/index.html` (the only place the ID appears). Because this is a single-page app, page views are sent by `client/src/hooks/use-page-meta.ts` on every page mount via `client/src/lib/analytics.ts`, which also reports these conversion events:
+
+| Event | When |
+| --- | --- |
+| `generate_lead` | Contact form submitted (param `method`: `whatsapp` handoff or `endpoint`) |
+| `newsletter_signup` | Newsletter form submitted (param `method`: `email` or `endpoint`) |
+| `contact_whatsapp` | Floating WhatsApp button clicked |
+
+Nothing is sent in development or when the tag is blocked. No cookie-consent banner is included; add one before launch if your privacy obligations (NDPR, or EU visitors) require it.
+
 ## Editing content
 
 - Business facts (name, phone, email, address, social links, nav items, page titles): `client/src/lib/site.ts`. Keep the JSON-LD block in `client/index.html` in sync.

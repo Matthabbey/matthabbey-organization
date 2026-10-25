@@ -1,6 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { whatsappUrl } from "@/lib/site";
+import { trackEvent } from "@/lib/analytics";
 
 export function WhatsAppButton() {
   const reduce = useReducedMotion();
@@ -11,6 +12,7 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
+      onClick={() => trackEvent("contact_whatsapp", { location: "floating_button" })}
       className="group fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full bg-whatsapp px-4 py-3 font-medium text-white shadow-lg transition-colors duration-300 hover:bg-whatsapp-dark focus-visible:ring-offset-2 md:bottom-8 md:right-8 md:px-5"
       initial={reduce ? false : { scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}

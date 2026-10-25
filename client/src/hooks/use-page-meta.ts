@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { trackPageView } from "@/lib/analytics";
 
 interface PageMeta {
   title: string;
@@ -22,7 +23,11 @@ function setUrl(selector: string, attr: "href" | "content", path: string) {
   el.setAttribute(attr, `${el.dataset.base}${path}`);
 }
 
-/** Per-page document title, description and canonical/og:url. */
+/**
+ * Per-page document title, description and canonical/og:url, plus the
+ * analytics page view. Runs once per page mount, after lazy pages resolve,
+ * so the title is final when the view is reported.
+ */
 export function usePageMeta({ title, description, path }: PageMeta) {
   useEffect(() => {
     document.title = title;
@@ -33,5 +38,6 @@ export function usePageMeta({ title, description, path }: PageMeta) {
     setContent('meta[name="twitter:description"]', description);
     setUrl('link[rel="canonical"]', "href", path);
     setUrl('meta[property="og:url"]', "content", path);
+    trackPageView({ path, title });
   }, [title, description, path]);
 }

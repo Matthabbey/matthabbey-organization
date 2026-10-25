@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { services } from "@/data/services";
 import { mailtoUrl, site, telUrl, whatsappUrl } from "@/lib/site";
 import { submitEnquiry, subscribePrefill, takePendingService, type EnquiryResult } from "@/lib/contact";
+import { trackEvent } from "@/lib/analytics";
 
 const OTHER_SERVICE = "Something else";
 const serviceOptions = [...services.map((s) => s.title), OTHER_SERVICE];
@@ -89,6 +90,12 @@ export function Contact() {
       message: values.message,
     });
 
+    if (res.status !== "error") {
+      trackEvent("generate_lead", {
+        method: res.status === "sent" ? "endpoint" : "whatsapp",
+        service: values.service,
+      });
+    }
     if (res.status === "handoff") {
       window.open(res.whatsapp, "_blank", "noopener,noreferrer");
     } else if (res.status === "error") {

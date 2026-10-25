@@ -1,21 +1,19 @@
-import { useEffect } from "react";
 import { Link } from "wouter";
 import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { site } from "@/lib/site";
 
 export default function NotFound() {
-  useEffect(() => {
-    const previous = document.title;
-    document.title = `Page not found | ${site.name}`;
-    return () => {
-      document.title = previous;
-    };
-  }, []);
+  usePageMeta({
+    title: `Page not found | ${site.name}`,
+    description: "This page doesn't exist. It may have been moved or removed.",
+    path: typeof window === "undefined" ? "/404" : window.location.pathname,
+  });
 
   return (
-    <main className="min-h-screen w-full flex items-center justify-center bg-background px-4">
+    <div className="flex min-h-[60vh] w-full items-center justify-center px-4 py-20">
       <Card className="w-full max-w-md bg-card border-border">
         <CardContent className="pt-6">
           <div className="flex mb-4 gap-2 items-center">
@@ -32,6 +30,6 @@ export default function NotFound() {
           </Button>
         </CardContent>
       </Card>
-    </main>
+    </div>
   );
 }
