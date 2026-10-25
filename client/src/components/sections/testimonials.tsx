@@ -1,59 +1,81 @@
-import { motion } from "framer-motion";
 import { Star } from "lucide-react";
+import { Section } from "@/components/layout/section";
+import { FadeIn } from "@/components/layout/motion";
+import { commitments } from "@/data/commitments";
 
-const testimonials = [
-  {
-    quote: "We came to them with a rough idea and a tight deadline. They turned it into a working app in under two months. Really solid team.",
-    author: "Tunde A.",
-    role: "Founder, QuickPay",
-    company: "QuickPay"
-  },
-  {
-    quote: "What I liked most is they actually listened. They didn't just build what we asked for — they pointed out things we hadn't thought of.",
-    author: "Chioma N.",
-    role: "Product Lead, HealthBridge",
-    company: "HealthBridge"
-  },
-  {
-    quote: "Honest, responsive, and they know their stuff. Our e-commerce site loads fast, looks great, and our customers love it.",
-    author: "David O.",
-    role: "CEO, ShopRight",
-    company: "ShopRight"
-  }
-];
+/**
+ * Real client quotes go here, with the client's permission.
+ * The testimonials block renders only when this list is non-empty,
+ * so no placeholder testimonials ever ship.
+ */
+export interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
+}
 
+export const testimonials: Testimonial[] = [];
+
+/** "What clients say" grid. Renders nothing until real testimonials exist. */
 export function Testimonials() {
+  if (testimonials.length === 0) return null;
   return (
-    <section className="py-24 bg-white dark:bg-gray-950 border-y border-gray-200 dark:border-white/10">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">What Our Clients Say</h2>
-        </div>
+    <Section id="testimonials" eyebrow="Testimonials" title="What clients say about us">
+      <ul className="grid gap-8 md:grid-cols-3">
+        {testimonials.map((t, index) => (
+          <FadeIn
+            as="li"
+            key={t.author}
+            delay={index * 0.08}
+            className="flex h-full flex-col rounded-2xl border border-border bg-card p-8 shadow-sm"
+          >
+            <div className="mb-5 flex gap-1 text-brand" aria-label="5 out of 5 stars">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} size={16} fill="currentColor" aria-hidden="true" />
+              ))}
+            </div>
+            <blockquote className="mb-6 flex-1 text-lg leading-relaxed text-foreground/90">"{t.quote}"</blockquote>
+            <footer>
+              <p className="font-semibold text-foreground">{t.author}</p>
+              <p className="text-sm text-muted-foreground">
+                {t.role}, {t.company}
+              </p>
+            </footer>
+          </FadeIn>
+        ))}
+      </ul>
+    </Section>
+  );
+}
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2 }}
-              viewport={{ once: true }}
-              className="bg-gray-50 dark:bg-gray-900 p-8 rounded-2xl border border-gray-200 dark:border-white/10 relative shadow-sm"
-            >
-              <div className="flex gap-1 text-yellow-500 mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={16} fill="currentColor" />
-                ))}
-              </div>
-              <p className="text-lg text-foreground/90 mb-8 leading-relaxed">"{t.quote}"</p>
-              <div>
-                <div className="font-bold text-foreground">{t.author}</div>
-                <div className="text-sm text-primary">{t.role}</div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
+/** "What every client gets" commitment cards (used on the Services page). */
+export function Commitments() {
+  return (
+    <Section
+      id="commitments"
+      tone="muted"
+      align="center"
+      eyebrow="Our commitments"
+      title="What every client gets"
+      description="We'd rather earn your trust with how we work than with claims we can't back up."
+    >
+      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {commitments.map((item, index) => (
+          <FadeIn
+            as="li"
+            key={item.title}
+            delay={index * 0.06}
+            className="flex h-full flex-col rounded-2xl border border-border bg-card p-7 text-left shadow-sm"
+          >
+            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+              <item.icon size={24} aria-hidden="true" />
+            </div>
+            <h3 className="mb-2 text-lg font-bold text-foreground">{item.title}</h3>
+            <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+          </FadeIn>
+        ))}
+      </ul>
+    </Section>
   );
 }

@@ -6,12 +6,16 @@
 @theme inline {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
+  --color-surface: hsl(var(--surface));
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
   --color-popover: hsl(var(--popover));
   --color-popover-foreground: hsl(var(--popover-foreground));
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-brand: hsl(var(--brand));
+  --color-brand-foreground: hsl(var(--brand-foreground));
+  --color-brand-strong: hsl(var(--brand-strong));
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
   --color-muted: hsl(var(--muted));
@@ -23,111 +27,169 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #128c7e;
 
-  --font-sans: 'Inter', sans-serif;
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-marquee-slow: marquee 70s linear infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
 }
 
+/*
+ * Brand palette sampled from client/public/images/logo.png:
+ *   navy  #004888  -> hsl(208 100% 27%)
+ *   green #88b820  -> hsl(79 70% 42%)
+ * `--brand` (green) is an accent for highlights and status. It does not meet
+ * AA contrast as text on white, so text that needs green uses `--brand-strong`.
+ * The site is dark by default (see .dark); light mode remains available.
+ */
 :root {
   --background: 0 0% 100%;
-  --foreground: 224 71% 4%;
+  --foreground: 215 60% 10%;
+  --surface: 210 33% 97%;
 
   --card: 0 0% 100%;
-  --card-foreground: 224 71% 4%;
+  --card-foreground: 215 60% 10%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 224 71% 4%;
+  --popover-foreground: 215 60% 10%;
 
-  --primary: 263 70% 50%;
+  --primary: 208 100% 27%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 220 14% 96%;
-  --secondary-foreground: 224 71% 4%;
+  --brand: 79 70% 42%;
+  --brand-foreground: 215 60% 10%;
+  --brand-strong: 80 70% 28%;
 
-  --muted: 220 14% 96%;
-  --muted-foreground: 220 9% 46%;
+  --secondary: 210 30% 95%;
+  --secondary-foreground: 215 60% 10%;
 
-  --accent: 220 14% 96%;
-  --accent-foreground: 224 71% 4%;
+  --muted: 210 30% 95%;
+  --muted-foreground: 215 16% 40%;
 
-  --destructive: 0 84% 60%;
+  --accent: 208 100% 96%;
+  --accent-foreground: 208 100% 22%;
+
+  --destructive: 0 72% 46%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 220 13% 91%;
-  --input: 220 13% 91%;
-  --ring: 263 70% 50%;
+  --border: 214 24% 89%;
+  --input: 214 24% 85%;
+  --ring: 208 100% 35%;
 
-  --radius: 0.5rem;
+  --radius: 0.625rem;
 }
 
 .dark {
-  --background: 224 71% 4%;
-  --foreground: 210 20% 98%;
+  --background: 222 30% 8%;
+  --foreground: 210 30% 96%;
+  --surface: 222 28% 10%;
 
-  --card: 224 71% 4%;
-  --card-foreground: 210 20% 98%;
+  --card: 222 26% 12%;
+  --card-foreground: 210 30% 96%;
 
-  --popover: 224 71% 4%;
-  --popover-foreground: 210 20% 98%;
+  --popover: 222 26% 12%;
+  --popover-foreground: 210 30% 96%;
 
-  --primary: 263 70% 50%;
-  --primary-foreground: 210 20% 98%;
+  --primary: 208 90% 62%;
+  --primary-foreground: 222 40% 8%;
 
-  --secondary: 215 28% 17%;
-  --secondary-foreground: 210 20% 98%;
+  --brand: 79 65% 50%;
+  --brand-foreground: 222 40% 8%;
+  --brand-strong: 79 60% 62%;
 
-  --muted: 215 28% 17%;
-  --muted-foreground: 218 11% 65%;
+  --secondary: 222 24% 16%;
+  --secondary-foreground: 210 30% 96%;
 
-  --accent: 215 28% 17%;
-  --accent-foreground: 210 20% 98%;
+  --muted: 222 24% 16%;
+  --muted-foreground: 215 16% 70%;
 
-  --destructive: 0 63% 31%;
-  --destructive-foreground: 210 20% 98%;
+  --accent: 208 60% 16%;
+  --accent-foreground: 208 90% 80%;
 
-  --border: 216 34% 17%;
-  --input: 216 34% 17%;
-  --ring: 263 70% 50%;
+  --destructive: 0 70% 60%;
+  --destructive-foreground: 222 40% 8%;
+
+  --border: 222 22% 18%;
+  --input: 222 22% 24%;
+  --ring: 208 90% 62%;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
   body {
-    @apply font-sans antialiased bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground;
+    @apply font-sans antialiased bg-background text-foreground selection:bg-primary/20 selection:text-foreground;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight;
+    @apply font-display tracking-tight text-balance;
+  }
+  p {
+    @apply text-pretty;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-/* Custom Utilities */
 @layer utilities {
-  .text-glow {
-    text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
-  }
-
-  .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-gray-200 dark:bg-white/5 dark:border-white/10;
-  }
-
   .hero-gradient {
-    background: radial-gradient(circle at top center, hsl(263 70% 50% / 0.08), transparent 60%);
+    background:
+      radial-gradient(60% 50% at 20% 0%, hsl(var(--primary) / 0.12), transparent 70%),
+      radial-gradient(50% 40% at 90% 90%, hsl(var(--brand) / 0.10), transparent 70%);
   }
 
   .bg-grid {
     background-size: 40px 40px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-image:
+      linear-gradient(to right, hsl(var(--foreground) / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--foreground) / 0.045) 1px, transparent 1px);
   }
-}
 
-.dark .bg-grid {
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  .bg-grid-fade {
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  /* Faint vertical column lines like the reference layout. */
+  .bg-columns {
+    background-image: repeating-linear-gradient(
+      to right,
+      hsl(var(--foreground) / 0.05) 0 1px,
+      transparent 1px 20%
+    );
+  }
+
+  /* Outlined display text for the decorative marquee. */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px hsl(var(--foreground) / 0.18);
+  }
 }

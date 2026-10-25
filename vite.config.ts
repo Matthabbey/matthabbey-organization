@@ -39,6 +39,16 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        // Long-lived vendor chunks cache independently of page code.
+        manualChunks: {
+          react: ["react", "react-dom", "wouter"],
+          motion: ["framer-motion"],
+          forms: ["react-hook-form", "@hookform/resolvers", "zod"],
+        },
+      },
+    },
   },
   server: {
     host: "0.0.0.0",

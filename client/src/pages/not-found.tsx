@@ -1,29 +1,37 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { useEffect } from "react";
+import { Link } from "wouter";
 import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
+import { Card, CardContent } from "@/components/ui/card";
+import { site } from "@/lib/site";
 
 export default function NotFound() {
+  useEffect(() => {
+    const previous = document.title;
+    document.title = `Page not found | ${site.name}`;
+    return () => {
+      document.title = previous;
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-background">
-      <Card className="w-full max-w-md mx-4 bg-white dark:bg-gray-900 border-gray-200 dark:border-white/10">
+    <main className="min-h-screen w-full flex items-center justify-center bg-background px-4">
+      <Card className="w-full max-w-md bg-card border-border">
         <CardContent className="pt-6">
           <div className="flex mb-4 gap-2 items-center">
-            <AlertCircle className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">Page Not Found</h1>
+            <AlertCircle className="h-8 w-8 text-primary" aria-hidden="true" />
+            <h1 className="text-2xl font-bold text-foreground">Page not found</h1>
           </div>
 
           <p className="mt-4 text-sm text-muted-foreground">
             This page doesn't exist. It may have been moved or removed.
           </p>
 
-          <Link href="/">
-            <Button className="mt-6 bg-primary hover:bg-primary/90 text-white">
-              Back to Home
-            </Button>
-          </Link>
+          <Button asChild className="mt-6">
+            <Link href="/">Back to home</Link>
+          </Button>
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 }

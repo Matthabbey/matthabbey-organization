@@ -1,96 +1,157 @@
-import { motion } from "framer-motion";
-import { ExternalLink, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Landmark, HeartPulse, ShoppingBag, Workflow, type LucideIcon } from "lucide-react";
+import { Section } from "@/components/layout/section";
+import { FadeIn } from "@/components/layout/motion";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
-const projects = [
+/**
+ * Real case studies go here. Each entry needs the client's permission to be named.
+ * When this list is non-empty the capability cards below are replaced by the case studies.
+ */
+export interface CaseStudy {
+  title: string;
+  client: string;
+  category: string;
+  /** What changed for the client, in their own words or with a figure you can stand behind. */
+  outcome: string;
+  description: string;
+  image: { src: string; alt: string; width: number; height: number };
+  tags: string[];
+  href?: string;
+}
+
+export const caseStudies: CaseStudy[] = [];
+
+interface Capability {
+  icon: LucideIcon;
+  title: string;
+  summary: string;
+  includes: string[];
+  stack: string[];
+}
+
+const capabilities: Capability[] = [
   {
-    title: "Nova Fintech",
-    category: "Mobile App",
-    description: "A mobile banking app with real-time transaction tracking, crypto wallet integration, and clean data dashboards.",
-    image: "/images/project-fintech.png",
-    tags: ["React Native", "Node.js", "Blockchain"],
+    icon: Landmark,
+    title: "Fintech & payments",
+    summary: "Products that move money need to be fast, auditable and secure from day one.",
+    includes: ["Wallets, transfers and transaction history", "Payment gateway and bank integrations", "KYC flows, roles and audit logs"],
+    stack: ["React Native", "Node.js", "PostgreSQL"],
   },
   {
-    title: "MediScan AI",
-    category: "Healthcare Platform",
-    description: "A diagnostic tool that helps doctors review patient scans faster using AI-assisted image analysis.",
-    image: "/images/project-health.png",
-    tags: ["Python", "TensorFlow", "React"],
+    icon: HeartPulse,
+    title: "Health & records",
+    summary: "Clinical and patient-facing tools where privacy and reliability come first.",
+    includes: ["Patient records and appointment booking", "Dashboards for clinicians and admins", "AI-assisted review of documents and images"],
+    stack: ["React", "Python", "Cloud storage"],
   },
   {
-    title: "Luxe Mode",
-    category: "E-Commerce",
-    description: "An online fashion store with product previews, size recommendations, and a smooth checkout experience.",
-    image: "/images/project-commerce.png",
-    tags: ["Next.js", "Stripe", "WebGL"],
+    icon: ShoppingBag,
+    title: "E-commerce & retail",
+    summary: "Storefronts and back-offices built to sell, not just to look good.",
+    includes: ["Catalogue, cart and checkout", "Inventory, orders and delivery tracking", "Payments and customer accounts"],
+    stack: ["Next.js", "Node.js", "Paystack / Stripe"],
+  },
+  {
+    icon: Workflow,
+    title: "Internal tools & automation",
+    summary: "Replace spreadsheets and manual steps with software your team actually uses.",
+    includes: ["Admin panels and reporting", "Workflow automation and integrations", "Chat assistants trained on your data"],
+    stack: ["React", "Node.js", "AI APIs"],
   },
 ];
 
-export function Projects() {
+function CapabilityGrid() {
   return (
-    <section id="portfolio" className="py-24 bg-gray-50 dark:bg-gray-900/50">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">
-              Our <span className="text-primary">Work</span>
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              Some of the projects we've shipped recently. Each one built from scratch to solve a real problem.
-            </p>
-          </div>
-          <Button variant="outline" className="border-gray-300 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5">
-            View All Projects <ArrowUpRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative rounded-2xl overflow-hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 hover:border-primary/50 transition-all duration-500 shadow-sm hover:shadow-md"
-            >
-              {/* Image Container */}
-              <div className="relative h-64 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent z-10" />
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute top-4 left-4 z-20">
-                  <Badge variant="secondary" className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-gray-200 dark:border-white/10 text-foreground hover:bg-white dark:hover:bg-gray-900">
-                    {project.category}
-                  </Badge>
-                </div>
+    <div className="grid gap-6 md:grid-cols-2">
+      {capabilities.map((item, index) => (
+        <FadeIn key={item.title} delay={index * 0.06} className="h-full">
+          <article className="flex h-full flex-col rounded-2xl border border-border bg-card p-7 shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-md md:p-8">
+            <div className="mb-5 flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+                <item.icon size={24} aria-hidden="true" />
               </div>
+              <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
+            </div>
+            <p className="mb-5 leading-relaxed text-muted-foreground">{item.summary}</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Typically includes</p>
+            <ul className="mb-6 list-disc space-y-1.5 pl-5 text-sm text-foreground/85 marker:text-brand">
+              {item.includes.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+            <ul className="mt-auto flex flex-wrap gap-2" aria-label="Typical technology">
+              {item.stack.map((tag) => (
+                <li key={tag} className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-muted-foreground">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </FadeIn>
+      ))}
+    </div>
+  );
+}
 
-              {/* Content */}
-              <div className="p-6 relative z-20 -mt-12">
-                <h3 className="text-2xl font-bold mb-3 flex items-center gap-2 text-white">
-                  {project.title}
-                  <ExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
-                </h3>
-                <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="text-xs font-mono px-2 py-1 rounded bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
+function CaseStudyGrid() {
+  return (
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {caseStudies.map((study, index) => (
+        <FadeIn key={study.title} delay={index * 0.06} className="h-full">
+          <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-md">
+            <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+              <img
+                src={study.image.src}
+                alt={study.image.alt}
+                width={study.image.width}
+                height={study.image.height}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <Badge variant="secondary" className="absolute left-4 top-4">{study.category}</Badge>
+            </div>
+            <div className="flex flex-1 flex-col p-6">
+              <p className="mb-1 text-sm font-medium text-muted-foreground">{study.client}</p>
+              <h3 className="mb-3 text-xl font-bold text-foreground">
+                {study.href ? (
+                  <a href={study.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded-sm hover:text-primary">
+                    {study.title} <ArrowUpRight size={16} aria-hidden="true" />
+                  </a>
+                ) : (
+                  study.title
+                )}
+              </h3>
+              <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{study.description}</p>
+              <p className="mb-5 rounded-lg bg-accent px-3 py-2 text-sm font-medium text-accent-foreground">{study.outcome}</p>
+              <ul className="mt-auto flex flex-wrap gap-2">
+                {study.tags.map((tag) => (
+                  <li key={tag} className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-muted-foreground">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        </FadeIn>
+      ))}
+    </div>
+  );
+}
+
+export function Work() {
+  const hasCaseStudies = caseStudies.length > 0;
+  return (
+    <Section
+      id="work"
+      title={hasCaseStudies ? "Projects we've shipped" : "Four kinds of systems we build most often"}
+      description={
+        hasCaseStudies
+          ? "A selection of recent projects, published with each client's permission."
+          : "Each card shows what the system usually includes and the technology we typically reach for."
+      }
+    >
+      {hasCaseStudies ? <CaseStudyGrid /> : <CapabilityGrid />}
+    </Section>
   );
 }

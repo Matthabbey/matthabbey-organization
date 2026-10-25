@@ -1,21 +1,25 @@
 import { MessageCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { whatsappUrl } from "@/lib/site";
 
 export function WhatsAppButton() {
+  const reduce = useReducedMotion();
+
   return (
     <motion.a
-      href="https://wa.me/2348036202050"
+      href={whatsappUrl()}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-8 right-8 z-50 flex items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white px-5 py-3 rounded-full shadow-lg transition-colors duration-300 font-medium group"
-      initial={{ scale: 0, opacity: 0 }}
+      aria-label="Chat with us on WhatsApp"
+      className="group fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full bg-whatsapp px-4 py-3 font-medium text-white shadow-lg transition-colors duration-300 hover:bg-whatsapp-dark focus-visible:ring-offset-2 md:bottom-8 md:right-8 md:px-5"
+      initial={reduce ? false : { scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 1, type: "spring" }}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      whileHover={reduce ? undefined : { scale: 1.05 }}
+      whileTap={reduce ? undefined : { scale: 0.95 }}
     >
-      <MessageCircle className="w-6 h-6 fill-current" />
-      <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap">
+      <MessageCircle className="h-6 w-6 fill-current" aria-hidden="true" />
+      <span className="hidden max-w-0 overflow-hidden whitespace-nowrap transition-[max-width] duration-300 ease-in-out group-hover:max-w-xs group-focus-visible:max-w-xs sm:inline-block">
         Chat on WhatsApp
       </span>
     </motion.a>

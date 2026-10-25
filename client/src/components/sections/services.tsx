@@ -1,75 +1,50 @@
-import { Code, Cpu, Globe, Layout, Lock, Rocket } from "lucide-react";
-import { motion } from "framer-motion";
-
-const services = [
-  {
-    icon: Globe,
-    title: "Web & Mobile Apps",
-    description: "Full-stack websites, dashboards, and mobile apps built with modern tools like React, Node.js, and React Native.",
-  },
-  {
-    icon: Cpu,
-    title: "AI & Automation",
-    description: "We integrate AI features into your products — from chatbots and recommendation engines to data processing pipelines.",
-  },
-  {
-    icon: Rocket,
-    title: "MVP Development",
-    description: "Got a startup idea? We'll help you build a working product fast so you can test it with real users and get funding.",
-  },
-  {
-    icon: Layout,
-    title: "UI/UX Design",
-    description: "Clean, intuitive interfaces that your users will actually enjoy using. We design for people, not awards.",
-  },
-  {
-    icon: Code,
-    title: "Blockchain & Web3",
-    description: "Smart contracts, dApps, and token systems. If your project involves blockchain, we can build it.",
-  },
-  {
-    icon: Lock,
-    title: "Security Audits",
-    description: "We review your codebase and infrastructure for vulnerabilities, then help you fix them before they become problems.",
-  },
-];
+import { ArrowRight, Check } from "lucide-react";
+import { Link } from "wouter";
+import { Section } from "@/components/layout/section";
+import { FadeIn } from "@/components/layout/motion";
+import { services } from "@/data/services";
+import { prefillService } from "@/lib/contact";
 
 export function Services() {
   return (
-    <section id="services" className="py-24 bg-gray-50 dark:bg-gray-900/50 relative">
-      <div className="container mx-auto px-6">
-        <div className="max-w-2xl mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">
-            What We <span className="text-primary">Do</span>
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            Here's how we help businesses like yours. Pick what you need, or let's talk about a custom solution.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group p-8 rounded-2xl bg-white dark:bg-gray-900 hover:bg-white dark:hover:bg-gray-800 border border-gray-200 dark:border-white/10 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md"
+    <Section
+      id="services"
+      title="What we do"
+      description="Here's how we help businesses like yours. Pick what you need, or talk to us about a custom solution."
+    >
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {services.map((service, index) => (
+          <FadeIn key={service.slug} delay={index * 0.06} className="h-full">
+            <article
+              id={service.slug}
+              className="group flex h-full scroll-mt-28 flex-col rounded-2xl border border-border bg-card p-7 shadow-sm transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
             >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
-                <service.icon size={24} />
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+                <service.icon size={24} aria-hidden="true" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">
-                {service.title}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {service.description}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+              <h3 className="mb-2 text-xl font-bold text-foreground">{service.title}</h3>
+              <p className="mb-5 leading-relaxed text-muted-foreground">{service.description}</p>
+              <ul className="mb-6 space-y-2 text-sm text-foreground/85">
+                {service.deliverables.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <Check size={16} className="mt-0.5 shrink-0 text-brand-strong" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/contact"
+                onClick={() => prefillService(service.title)}
+                className="mt-auto inline-flex items-center gap-1 rounded-sm text-sm font-semibold text-primary transition-colors hover:underline"
+              >
+                Discuss this service
+                <ArrowRight size={16} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+                <span className="sr-only">: {service.title}</span>
+              </Link>
+            </article>
+          </FadeIn>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }

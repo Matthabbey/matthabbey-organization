@@ -1,85 +1,88 @@
-import { motion } from "framer-motion";
+import { ArrowUpRight, Phone } from "lucide-react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Code2, Terminal } from "lucide-react";
+import { FadeIn } from "@/components/layout/motion";
+import { Picture } from "@/components/layout/picture";
+import { photos } from "@/data/photos";
+import { site, telUrl } from "@/lib/site";
+
+/** Rotating circular label overlapping the hero photo, like the reference's "digital agency" badge. */
+function RotatingBadge() {
+  const text = `Software studio · ${site.address.region} · `;
+  return (
+    <div
+      aria-hidden="true"
+      className="absolute -top-14 right-6 hidden h-28 w-28 items-center justify-center md:flex lg:right-16"
+    >
+      <svg viewBox="0 0 100 100" className="h-full w-full animate-spin-slow motion-reduce:animate-none">
+        <defs>
+          <path id="hero-badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
+        </defs>
+        <text className="fill-foreground font-display text-[10.5px] font-semibold uppercase tracking-[0.22em]">
+          <textPath href="#hero-badge-circle">{text + text}</textPath>
+        </text>
+      </svg>
+      <span className="absolute h-2.5 w-2.5 rounded-full bg-brand" />
+    </div>
+  );
+}
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-50 to-white dark:from-gray-950 dark:to-gray-900 z-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-primary/10 rounded-full blur-[120px] opacity-30" />
-        <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-blue-500/5 rounded-full blur-[100px] opacity-20" />
-      </div>
+    <section aria-labelledby="hero-heading" className="hero-gradient relative overflow-hidden">
+      <div className="bg-columns pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
 
-      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm mb-6">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-xs font-medium text-gray-600 dark:text-gray-400 tracking-wide uppercase">Taking on New Projects</span>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold font-display tracking-tight leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-gray-900 via-gray-800 to-gray-500 dark:from-white dark:via-gray-200 dark:to-gray-500">
-            We Build Software <br />
-            <span className="text-primary text-glow">That Works</span>
-          </h1>
-
-          <p className="text-lg text-muted-foreground mb-8 max-w-lg leading-relaxed">
-            At Matthabbey, we transform ideas into high-performing web and mobile products. From concept to deployment, we build the technology that helps businesses scale faster and smarter.
+      <div className="container relative mx-auto px-6 pt-16 pb-14 md:pt-24 md:pb-20">
+        <FadeIn immediate className="max-w-4xl">
+          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground shadow-sm">
+            <span className="relative flex h-2 w-2" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75 motion-reduce:hidden" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
+            </span>
+            Taking on new projects
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#services">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white h-12 px-8 text-base">
-                See What We Do <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </a>
-            <a href="#portfolio">
-              <Button size="lg" variant="outline" className="border-gray-300 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-foreground h-12 px-8 text-base">
-                View Our Work
-              </Button>
+          <h1
+            id="hero-heading"
+            className="text-5xl font-bold leading-[1.02] tracking-tight text-foreground sm:text-6xl lg:text-7xl xl:text-[5.5rem]"
+          >
+            Software that works <span className="text-primary">for your business.</span>
+          </h1>
+
+          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+            {site.shortName} designs and builds web apps, mobile products and automation for startups and growing
+            businesses. We scope it clearly, build it well and deliver on time.
+          </p>
+
+          <div className="mt-9 flex flex-col gap-5 sm:flex-row sm:items-center">
+            <Button asChild variant="outline" size="lg" className="border-foreground/30">
+              <Link href="/contact">
+                Contact us <ArrowUpRight aria-hidden="true" />
+              </Link>
+            </Button>
+            <a
+              href={telUrl}
+              className="inline-flex items-center gap-3 rounded-full text-base font-semibold text-foreground transition-colors hover:text-primary"
+            >
+              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card">
+                <Phone size={18} aria-hidden="true" />
+              </span>
+              {site.phone.display}
             </a>
           </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative hidden lg:block"
-        >
-          <div className="relative z-10 bg-gray-900 backdrop-blur-xl border border-gray-800 rounded-2xl p-6 shadow-2xl">
-            <div className="flex items-center gap-2 mb-4 border-b border-gray-700 pb-4">
-              <div className="w-3 h-3 rounded-full bg-red-500/80" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-              <div className="w-3 h-3 rounded-full bg-green-500/80" />
-            </div>
-            <div className="font-mono text-sm space-y-2 text-blue-200/80">
-              <div className="flex gap-2">
-                <span className="text-purple-400">const</span>
-                <span className="text-yellow-200">future</span>
-                <span className="text-white">=</span>
-                <span className="text-green-400">new</span>
-                <span className="text-blue-300">Innovation</span>();
-              </div>
-              <div className="flex gap-2 pl-4">
-                <span className="text-purple-400">await</span>
-                <span className="text-yellow-200">future</span>.
-                <span className="text-blue-300">deploy</span>({"{ scale: 'global' }"});
-              </div>
-              <div className="h-4" />
-              <div className="text-gray-500">// Ship it. Let's go.</div>
-            </div>
-          </div>
-
-          {/* Decorative floating elements */}
-          <Terminal className="absolute -top-12 -right-8 text-primary/20 w-32 h-32 rotate-12" />
-          <Code2 className="absolute -bottom-8 -left-12 text-blue-500/10 w-40 h-40 -rotate-12" />
-        </motion.div>
+        </FadeIn>
       </div>
+
+      <FadeIn immediate delay={0.15} className="relative">
+        <RotatingBadge />
+        <Picture
+          photo={photos.hero}
+          priority
+          sizes="100vw"
+          className="h-[320px] sm:h-[420px] md:h-[520px] lg:h-[600px]"
+          imgClassName="object-[50%_40%]"
+        />
+      </FadeIn>
     </section>
   );
 }

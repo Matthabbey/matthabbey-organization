@@ -1,92 +1,174 @@
-import { Link } from "wouter";
+import { useEffect, useId, useState } from "react";
+import { Link, useLocation } from "wouter";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Menu, MessageCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { cta, nav, site, whatsappUrl } from "@/lib/site";
+import { cn } from "@/lib/utils";
+
+function Logo({ className }: { className?: string }) {
+  return (
+    <span className={cn("inline-flex items-center", className)}>
+      <img
+        src="/images/logo.png"
+        alt={site.name}
+        width={291}
+        height={92}
+        fetchPriority="high"
+        decoding="async"
+        className="h-9 w-auto dark:hidden"
+      />
+      <img
+        src="/images/logo-dark.png"
+        alt=""
+        aria-hidden="true"
+        width={291}
+        height={92}
+        decoding="async"
+        className="hidden h-9 w-auto dark:block"
+      />
+    </span>
+  );
+}
+
+function isActive(location: string, href: string) {
+  return href === "/" ? location === "/" : location.startsWith(href);
+}
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [location] = useLocation();
+  const menuId = useId();
+  const reduce = useReducedMotion();
 
-  const links = [
-    { name: "Services", href: "#services" },
-    { name: "Process", href: "#process" },
-    { name: "Portfolio", href: "#portfolio" },
-    { name: "About", href: "#about" },
-  ];
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    const mq = window.matchMedia("(min-width: 768px)");
+    const onResize = () => {
+      if (mq.matches) setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    mq.addEventListener("change", onResize);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      mq.removeEventListener("change", onResize);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
+  const close = () => setIsOpen(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-200 dark:border-white/10 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md">
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/">
-          <a className="flex items-center gap-3 group">
-            <span className="text-2xl font-bold font-display tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-400">
-              MATTHABBEY
-            </span>
-          </a>
+    <header
+      className={cn(
+        "sticky top-0 z-50 border-b backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300",
+        scrolled || isOpen ? "border-border bg-background/90 shadow-sm" : "border-transparent bg-background/80",
+      )}
+    >
+      <nav aria-label="Primary" className="container mx-auto flex h-20 items-center justify-between px-6">
+        <Link href="/" className="rounded-md" aria-label={`${site.name} home`} onClick={close}>
+          <Logo />
         </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
+        {/* Desktop navigation */}
+        <div className="hidden items-center gap-7 md:flex">
+          <ul className="flex items-center gap-7">
+            {nav.map((link) => {
+              const active = isActive(location, link.href);
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "rounded-sm text-sm font-medium transition-colors hover:text-foreground",
+                      active ? "text-foreground" : "text-muted-foreground",
+                    )}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
           <ThemeToggle />
-          <a href="https://wa.me/2348036202050" target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" className="border-primary/20 hover:bg-primary/10 hover:text-primary text-foreground">
-              Start a Project
-            </Button>
-          </a>
+          <Button asChild>
+            <Link href={cta.href}>{cta.label}</Link>
+          </Button>
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X /> : <Menu />}
-        </button>
-      </div>
+        {/* Mobile toggle */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
+            onClick={() => setIsOpen((v) => !v)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            aria-controls={menuId}
+          >
+            {isOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+          </button>
+        </div>
+      </nav>
 
-      {/* Mobile Nav */}
+      {/* Mobile navigation */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
+            id={menuId}
+            initial={reduce ? false : { opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-b border-gray-200 dark:border-white/10 bg-white dark:bg-gray-950"
+            exit={reduce ? undefined : { opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden border-t border-border bg-background md:hidden"
           >
-            <div className="flex flex-col p-6 gap-4">
-              {links.map((link) => (
-                <a
-                  key={link.name}
+            <nav aria-label="Mobile" className="container mx-auto flex flex-col gap-1 px-6 py-5">
+              {nav.map((link) => (
+                <Link
+                  key={link.href}
                   href={link.href}
-                  className="text-lg font-medium text-muted-foreground hover:text-foreground"
-                  onClick={() => setIsOpen(false)}
+                  aria-current={isActive(location, link.href) ? "page" : undefined}
+                  className={cn(
+                    "rounded-md px-2 py-3 text-lg font-medium transition-colors hover:bg-muted",
+                    isActive(location, link.href) ? "text-primary" : "text-foreground",
+                  )}
+                  onClick={close}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
-              <div className="flex items-center gap-4 mt-2">
-                <ThemeToggle />
-                <span className="text-sm text-muted-foreground">Toggle theme</span>
-              </div>
-              <a href="https://wa.me/2348036202050" target="_blank" rel="noopener noreferrer">
-                <Button className="w-full mt-4 bg-primary hover:bg-primary/90 text-white">
-                  Start a Project
+              <div className="mt-3 flex flex-col gap-3 border-t border-border pt-5">
+                <Button asChild size="lg">
+                  <Link href={cta.href} onClick={close}>
+                    {cta.label}
+                  </Link>
                 </Button>
-              </a>
-            </div>
+                <Button asChild variant="outline" size="lg">
+                  <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" onClick={close}>
+                    <MessageCircle aria-hidden="true" /> Chat on WhatsApp
+                  </a>
+                </Button>
+              </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 }
